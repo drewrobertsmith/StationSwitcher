@@ -12,6 +12,7 @@ import { addTracks, setupPlayer } from "../services/trackplayerService";
 import { useEffect, useState } from "react";
 
 import FloatingPlayer from "../components/floatingPlayer";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { STATIONDATA } from "../api/stationData";
 import StationFeed from "../components/stationFeed";
 
@@ -43,22 +44,23 @@ export default function HomePage() {
     }
   }, [activeTrack]);
 
-
   if (!isPlayerReady) {
     return <Text>Player is loading...</Text>;
   } else {
     return (
-      <QueryClientProvider client={queryClient}>
-        <View
-          style={[
-            styles.container,
-            { backgroundColor: currentBackgroundColor },
-          ]}
-        >
-          <StationFeed activeTrack={activeTrack} />
-          <FloatingPlayer />
-        </View>
-      </QueryClientProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <QueryClientProvider client={queryClient}>
+          <View
+            style={[
+              styles.container,
+              { backgroundColor: currentBackgroundColor },
+            ]}
+          >
+            <StationFeed activeTrack={activeTrack} />
+            <FloatingPlayer />
+          </View>
+        </QueryClientProvider>
+      </GestureHandlerRootView>
     );
   }
 }
@@ -67,5 +69,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 8,
+    justifyContent: "space-between"
   },
 });

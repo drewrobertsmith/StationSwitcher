@@ -1,13 +1,26 @@
-import { FlatList, StyleSheet } from "react-native";
+import DraggableFlatList, {
+  ScaleDecorator,
+} from "react-native-draggable-flatlist";
+import { FlatList, Pressable, StyleSheet, Text } from "react-native";
 
 import { STATIONDATA } from "../api/stationData";
 import StationTitle from "./stationTitle";
+import renderItem from "./stationTitle";
+import { useState } from "react";
 
-export default function StationFeed({activeTrack}) {
+export default function StationFeed({ activeTrack }) {
+  const [data, setData] = useState(STATIONDATA);
+
+  /* renderItem needs ot be wrapped to pass other properties down wiht it */
+  const renderItemWithActiveTrack = ({ item, drag, isActive }) => {
+    return renderItem({ activeTrack, item, drag, isActive });
+  };
+
   return (
-    <FlatList
-      data={STATIONDATA}
-      renderItem={({ item }) => <StationTitle station={item} activeTrack={activeTrack}/>}
+    <DraggableFlatList
+      data={data}
+      onDragEnd={({ data }) => setData(data)}
+      renderItem={renderItemWithActiveTrack}
       keyExtractor={(item) => item.callLetters}
       contentContainerStyle={styles.stationFeed}
     />
