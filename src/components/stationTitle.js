@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ScaleDecorator } from "react-native-draggable-flatlist";
 import TrackPlayer from "react-native-track-player";
 
-export default function renderItem({
+export default function RenderItem({
   activeTrack,
   item,
   drag,

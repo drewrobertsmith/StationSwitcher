@@ -1,10 +1,11 @@
+import { StyleSheet, Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DraggableFlatList from "react-native-draggable-flatlist";
+import LocalStation from "./localStation";
+import RenderItem from "./stationTitle";
 import { STATIONDATA } from "../api/stationData";
-import { StyleSheet } from "react-native";
-import renderItem from "./stationTitle";
 
 export default function StationFeed({ activeTrack }) {
   const [data, setData] = useState(STATIONDATA);
@@ -39,22 +40,30 @@ export default function StationFeed({ activeTrack }) {
   }, [data]);
 
   /* renderItem for DraggableFlatlist needs to be wrapped to pass other properties down wiht it */
-  const renderItemWithActiveTrack = ({ item, drag, isActive }) => {
-    return renderItem({ activeTrack, item, drag, isActive });
+  const RenderItemWithActiveTrack = ({ item, drag, isActive }) => {
+    return RenderItem({ activeTrack, item, drag, isActive });
   };
 
   return (
-    <DraggableFlatList
-      data={data}
-      onDragEnd={({ data }) => setData(data)}
-      renderItem={renderItemWithActiveTrack}
-      keyExtractor={(item) => item.callLetters}
-      contentContainerStyle={styles.stationFeed}
-    />
+    <View>
+      <LocalStation />
+      <DraggableFlatList
+        data={data}
+        onDragEnd={({ data }) => setData(data)}
+        renderItem={RenderItemWithActiveTrack}
+        keyExtractor={(item) => item.callLetters}
+        contentContainerStyle={styles.stationFeed}
+      />
+    </View>
   );
 }
 const styles = StyleSheet.create({
   stationFeed: {
     justifyContent: "space-evenly",
+    height: "90%",
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 40,
   },
 });

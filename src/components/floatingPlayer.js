@@ -55,7 +55,7 @@ export default function FloatingPlayer() {
     enabled: !!activeTrack?.id, // only run the query if activeTrack.id is truthy
   });
 
-  /* prases the crappy triton xml response into something workable */
+  /* parses the crappy triton xml response into something workable */
   const metadata = data?.["nowplaying-info-list"]["nowplaying-info"][0][
     "property"
   ].reduce((acc, prop) => {
