@@ -15,6 +15,7 @@ import FloatingPlayer from "../components/floatingPlayer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { STATIONDATA } from "../api/stationData";
 import StationFeed from "../components/stationFeed";
+import { StatusBar } from "expo-status-bar";
 
 export default function HomePage() {
   const [isPlayerReady, setIsPlayerReady] = useState(false);
@@ -50,6 +51,7 @@ export default function HomePage() {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
         <QueryClientProvider client={queryClient}>
+          <StatusBar />
           <View
             style={[
               styles.container,
@@ -58,6 +60,7 @@ export default function HomePage() {
           >
             <StationFeed activeTrack={activeTrack} />
             <FloatingPlayer />
+
           </View>
         </QueryClientProvider>
       </GestureHandlerRootView>
